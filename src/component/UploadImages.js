@@ -1,6 +1,6 @@
-import React, { useMemo, useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import _ from "lodash";
+import React, { useMemo, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import _ from 'lodash';
 
 const baseStyle = {
   flex: 1,
@@ -84,7 +84,6 @@ const UploadImages = props => {
     onDrop: acceptedFiles => {
       const tempArray = _.cloneDeep(files);
       acceptedFiles.map(file => {
-        console.log('file is', file);
         tempArray.push({
           name: file.name,
           size: file.size,

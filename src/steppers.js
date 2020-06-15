@@ -89,7 +89,7 @@ const HorizontalLabelPositionBelowStepper = () => {
               classes.instructions
             } > {
               getStepContent(activeStep, handleNext, setDataToUploadImage, uploadData)
-            } >
+            }
             </div>
           )}
         </div>
