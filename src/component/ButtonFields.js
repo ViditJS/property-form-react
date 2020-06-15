@@ -1,24 +1,50 @@
 import React, {useState} from 'react';
+import Papa from 'papaparse';
+import './ButtonFields.css';
 
 const ButtonFields = ({buttonEvent}) => {
+
+    const [csvFile, setCSVFile] = useState(undefined);
+    const [fileAvailable, setfileAvailable] = useState(false);
+
+    const handleChange = event => {
+        if(event.target.files[0]) {
+            setfileAvailable(true);
+            setCSVFile(event.target.files[0]);
+        }
+        
+  };
+   const importCSV = () => {
+       Papa.parse(csvFile, {
+            complete: updateData,
+            header: true
+        });
+    };
+
+    const updateData = (result) => {
+        var data = result.data[0];
+        setCSVFile(data);
+        buttonEvent(data)
+    };
     return (
-        <div className="row">
+        <div className="row button-fields">
             <div className="col-sm-12 text-center">
-                <button id="btnSearch" className="btn btn-primary btn-md center-block" style={{width: "100px"}} onClick={buttonEvent} >Add from scratch</button>
-                {/* <button id="btnClear" className="btn btn-danger btn-md center-block"  style={{width: "100px"}} onClick={()=>buttonEvent()} >Upload as CSV</button> */}
-                <input
-                    className="csv-input"
-                    type="file"
-                    // ref={input => {
-                    //     this.filesInput = input;
-                    // }}
-                    name="file"
-                    placeholder={null}
-                    // onChange={this.handleChange}
-                    />
                 <button 
-                // onClick={this.importCSV}
-                > Upload now!</button>
+                    className="add-from-scratch"
+                    type='button'  
+                    onClick={buttonEvent}
+                    style={{marginRight : '5px'}}
+                    >
+                    Add from scratch
+                </button>
+                <label className="custom-file-upload">
+                    <input  onChange={handleChange} type="file"/>
+                    Custom Upload
+                </label>
+                {fileAvailable && <button 
+                    className="upload-now"
+                    onClick={importCSV}
+                > Upload now!</button>}
             </div>
         </div>    
     )
